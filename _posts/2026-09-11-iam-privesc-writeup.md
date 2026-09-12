@@ -77,7 +77,7 @@ This is the part I actually care most about. Pulling the CloudTrail event afterw
 }
 ```
 
-A few things stand out, in the order I'd flag them in a real investigation:
+This is the order I'd flag them in a real investigation:
 
 1. **`SetDefaultPolicyVersion` as the event name.** This API call is rare in legitimate workflows. Seeing it at all is a signal worth investigating on its own.
 2. **`versionId: v3`.** Meaningless without context but if you've already reviewed the policy's version history (as any thorough investigation should), you immediately recognize v3 as the full-admin version. This single field tells you the outcome of the action without needing to check anything else.
