@@ -1,5 +1,8 @@
+---
+layout: post
 title: "Cloud Incident Response: IAM Privilege Escalation"
-
+date: 2026-09-11
+---
 
 *Part of an ongoing home lab series while pursuing AWS Solutions Architect and Security Specialty certifications.*
 
