@@ -1,3 +1,6 @@
+title: "Cloud Incident Response: IAM Privilege Escalation"
+
+
 *Part of an ongoing home lab series while pursuing AWS Solutions Architect and Security Specialty certifications.*
 
 ## Background
