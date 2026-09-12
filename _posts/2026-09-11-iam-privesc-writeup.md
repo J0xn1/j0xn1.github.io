@@ -8,24 +8,24 @@ date: 2026-09-11
 
 ## Background
 
-After three years in Incident Response, I'm working on translating that experience into cloud security — specifically, learning to think like both the attacker and the defender in AWS and Azure environments. This post walks through the first exercise in that process: exploiting a real IAM misconfiguration using [CloudGoat](https://github.com/RhinoSecurityLabs/cloudgoat), Rhino Security Labs' "vulnerable by design" AWS deployment tool.
+After some time doing Incident Response, I've gained an interest into cloud security, specifically, learning to think like both the attacker and the defender in AWS and Azure environments. This post walks through the first exercise in that process: exploiting a real IAM misconfiguration using [CloudGoat](https://github.com/RhinoSecurityLabs/cloudgoat), Rhino Security Labs' "vulnerable by design" AWS deployment tool.
 
-The goal wasn't just to run an exploit — it was to close the loop an IR analyst actually cares about: **what happened, and what evidence did it leave behind?**
+The goal was to close the loop an IR analyst actually cares about: what happened, and what evidence did it leave behind?
 
 ## Lab Setup
 
 - Local Kali Linux VM (VirtualBox) as the attacker workstation
-- Real AWS free-tier account, with logging established *before* deploying anything vulnerable:
+- Real AWS free-tier account, with logging established before deploying anything vulnerable:
   - CloudTrail (API activity logging)
   - AWS Config (configuration change tracking)
   - GuardDuty (pending account activation)
 - CloudGoat 2.5.0 deployed via Poetry, targeting the `iam_privesc_by_rollback` scenario
 
-Standing up detection first, then attacking, mirrors how I'd want any real environment set up — you can't investigate what you never logged.
+Standing up detection first, then attacking,  you can't investigate what you never logged.
 
 ## The Vulnerability: Policy Version Rollback
 
-CloudGoat deployed a low-privilege IAM user (`raynor`) with what looked like a minimal, read-only policy. But AWS IAM policies keep version history — up to five versions per managed policy — and old versions don't disappear when a policy is updated unless someone explicitly deletes them.
+CloudGoat deployed a low-privilege IAM user (`raynor`) with what looked like a minimal, read-only policy. But AWS IAM policies keep version history up to five versions per managed policy and old versions don't disappear when a policy is updated unless someone explicitly deletes them.
 
 Inspecting the policy's version history revealed the problem immediately:
 
@@ -39,7 +39,7 @@ Inspecting the policy's version history revealed the problem immediately:
 
 The current policy (v1) looked harmless on its own. But it granted one specific, easy-to-overlook permission: `iam:SetDefaultPolicyVersion` — the ability to change *which version* of the policy is active, without needing permission to edit the policy's content at all.
 
-That's the entire vulnerability. Nobody needs to write a new malicious policy or escalate through some elaborate chain — an old, more permissive version was just sitting there, waiting to be reactivated.
+That's the entire vulnerability. Nobody needs to write a new malicious policy or escalate through some elaborate chain, an old, more permissive version was just sitting there, waiting to be reactivated.
 
 ## The Exploit
 
@@ -52,7 +52,7 @@ aws iam set-default-policy-version \
   --profile raynor
 ```
 
-One command, and `raynor` now has full administrative access — confirmed by listing every bucket in the account, something the original permission set never allowed:
+One command, and `raynor` now has full administrative access, confirmed by listing every bucket in the account, something the original permission set never allowed:
 
 ```bash
 aws s3 ls --profile raynor
@@ -60,7 +60,7 @@ aws s3 ls --profile raynor
 
 ## Reading the Evidence
 
-This is the part I actually care most about. Pulling the corresponding CloudTrail event afterward showed exactly what a real investigation would surface:
+This is the part I actually care most about. Pulling the corresponding CloudTrail event afterward showed exactly what a real investigation would show:
 
 ```json
 {
@@ -79,8 +79,8 @@ This is the part I actually care most about. Pulling the corresponding CloudTrai
 
 A few things stand out, in the order I'd flag them in a real investigation:
 
-1. **`SetDefaultPolicyVersion` as the event name.** This API call is rare in legitimate workflows — most organizations never call it directly. Seeing it at all is a signal worth investigating on its own.
-2. **`versionId: v3`.** Meaningless without context — but if you've already reviewed the policy's version history (as any thorough investigation should), you immediately recognize v3 as the full-admin version. This single field tells you the outcome of the action without needing to check anything else.
+1. **`SetDefaultPolicyVersion` as the event name.** This API call is rare in legitimate workflows. Seeing it at all is a signal worth investigating on its own.
+2. **`versionId: v3`.** Meaningless without context but if you've already reviewed the policy's version history (as any thorough investigation should), you immediately recognize v3 as the full-admin version. This single field tells you the outcome of the action without needing to check anything else.
 3. **The user agent literally contains `kali-amd64`.** In a real environment, this is about as loud a signal as it gets — legitimate business workflows don't run AWS CLI from a penetration testing distribution. This is the kind of small detail that's easy to miss if you're only skimming event names, but immediately actionable once you know to look for it.
 4. **Source IP correlation.** Matching the source IP against known-good ranges (VPN, office egress, etc.) is a standard IR step, and it's just as relevant in cloud investigations as it is in traditional network forensics.
 
