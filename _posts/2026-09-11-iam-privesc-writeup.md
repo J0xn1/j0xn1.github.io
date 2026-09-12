@@ -88,7 +88,7 @@ This is the order I'd flag them in a real investigation:
 
 - **Old policy versions are a real, underrated attack surface.** IAM policies default to keeping up to five versions, and cleanup isn't automatic. A single overlooked permission (`iam:SetDefaultPolicyVersion`) turned a "read-only" identity into a full admin.
 - **Logging before attacking matters.** Because CloudTrail was already running, this entire chain was fully reconstructable after the fact — exactly the workflow a real detection engineer or IR analyst would rely on.
-- **Small details carry a lot of signal.** The user-agent string alone would be enough to open an investigation in a real SOC. Cloud security work has different artifacts than traditional endpoint/network IR, but the underlying instinct — look for what doesn't belong — transfers directly.
+- **Small details carry a lot of signal.** The user-agent string alone would be enough to open an investigation in a real SOC. Cloud security work has different artifacts than traditional IR, but the instinct and what to look for transfer directly.
 
 ## Next Up
 
