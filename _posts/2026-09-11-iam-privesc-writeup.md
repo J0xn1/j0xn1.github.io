@@ -8,7 +8,7 @@ date: 2026-09-11
 
 ## Background
 
-After some time doing Incident Response, I've gained an interest into cloud security, specifically, learning to think like both the attacker and the defender in AWS and Azure environments. This post walks through the first exercise that I did: exploiting a real IAM misconfiguration using [CloudGoat](https://github.com/RhinoSecurityLabs/cloudgoat), Rhino Security Labs' "vulnerable by design" AWS deployment tool.
+After some time doing Incident Response, I've gained an interest into cloud security, learning to think like both the attacker and the defender in AWS and Azure environments. This post walks through the first exercise that I did: exploiting a real IAM misconfiguration using [CloudGoat](https://github.com/RhinoSecurityLabs/cloudgoat), Rhino Security Labs' "vulnerable by design" AWS deployment tool.
 
 The goal was to close the loop an IR analyst actually cares about: what happened, and what evidence did it leave behind?
 
