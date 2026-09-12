@@ -10,7 +10,7 @@ Part of an ongoing home lab series while pursuing AWS Solutions Architect and Se
 
 After some time doing Incident Response, I've gained an interest into cloud security, learning to think like both the attacker and the defender in AWS and Azure environments. I built a home lab in AWS and Azure where I can practice both attacking and defending cloud environments.
 
-For this first exercise, I used CloudGoat (a tool from Rhino Security Labs that deploys intentionally vulnerable AWS environments) to run a real IAM privilege escalation attack. The goal wasn't just to run the exploit, I wanted to actually go back afterward and see what evidence it left in the logs.
+For this first exercise, I used CloudGoat (a tool from Rhino Security Labs that deploys intentionally vulnerable AWS environments) to run a real IAM privilege escalation attack. There are a few blog posts out there already regarding this exercise but I wanted to reconstruct it in my own environment. The goal wasn't just to run the exploit, I wanted to actually go back afterward and see what evidence it left in the logs.
 
 ## Lab Setup
 
