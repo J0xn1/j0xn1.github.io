@@ -1,0 +1,25 @@
+---
+layout: default
+---
+<section class="hero">
+  <div class="wrap">
+    <p class="case-tag">STATUS: ACTIVE - IR TO CLOUD SECURITY</p>
+    <h1>Cloud Incident Response</h1>
+    <p class="hero-lede">{{ content }}</p>
+  </div>
+</section>
+<section class="case-log">
+  <div class="wrap">
+    <h2>Case Log</h2>
+    <div class="entries">
+      {% for post in site.posts %}
+      <a class="entry" href="{{ post.url | relative_url }}">
+        <span class="entry-date">{{ post.date | date: "%b %d, %Y" }}</span>
+        <span class="entry-title">{{ post.title }}</span>
+        <span class="entry-excerpt">{{ post.excerpt | strip_html | truncatewords: 28 }}</span>
+        <span class="entry-more">Read case &rarr;</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
