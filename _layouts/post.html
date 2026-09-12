@@ -1,0 +1,13 @@
+---
+layout: default
+---
+<article class="case-file">
+  <div class="wrap">
+    <p class="case-tag">CASE FILE - {{ page.date | date: "%b %d, %Y" }}</p>
+    <h1>{{ page.title }}</h1>
+    <div class="case-body">
+      {{ content }}
+    </div>
+    <a class="back-link" href="{{ '/' | relative_url }}">&larr; Back to case log</a>
+  </div>
+</article>
