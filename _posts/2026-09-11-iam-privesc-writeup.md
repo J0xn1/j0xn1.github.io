@@ -4,7 +4,7 @@ title: "Cloud Incident Response: IAM Privilege Escalation - Jon J"
 date: 2026-09-11
 ---
 
-*Part of an ongoing home lab series while pursuing Cloud ecurity certifications.*
+*Part of an ongoing home lab series while pursuing Cloud Security certifications.*
 
 ## Background
 
