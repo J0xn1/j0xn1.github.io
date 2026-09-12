@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Cloud Incident Response: IAM Privilege Escalation - Jon J"
+title: "Cloud Incident Response: IAM Privilege Escalation - Jon"
 date: 2026-09-11
 ---
 
@@ -37,7 +37,7 @@ Inspecting the policy's version history revealed the problem immediately:
 | v4 | Narrow IAM read access, expired time condition (decoy) |
 | v5 | S3 read-only |
 
-The current policy (v1) looked harmless on its own. But it granted one specific, easy-to-overlook permission: `iam:SetDefaultPolicyVersion` — the ability to change *which version* of the policy is active, without needing permission to edit the policy's content at all.
+The current policy (v1) looked harmless on its own. But it granted one specific permission: `iam:SetDefaultPolicyVersion`  the ability to change which version of the policy is active, without needing permission to edit the policy's content at all.
 
 That's the entire vulnerability. Nobody needs to write a new malicious policy or escalate through some elaborate chain, an old, more permissive version was just sitting there, waiting to be reactivated.
 
