@@ -79,10 +79,10 @@ This is the part I actually care most about. Pulling the CloudTrail event afterw
 
 This is the order I'd flag them in a real investigation:
 
-1. **`SetDefaultPolicyVersion` as the event name.** This API call is rare in legitimate workflows. Seeing it at all is a signal worth investigating on its own.
-2. **`versionId: v3`.** Meaningless without context but if you've already reviewed the policy's version history (as any thorough investigation should), you immediately recognize v3 as the full-admin version. This single field tells you the outcome of the action without needing to check anything else.
-3. **The user agent literally contains `kali-amd64`.** In a real environment, this is about as loud a signal as it gets — legitimate business workflows don't run AWS CLI from a penetration testing distribution. This is the kind of small detail that's easy to miss if you're only skimming event names, but immediately actionable once you know to look for it.
-4. **Source IP correlation.** Matching the source IP against known-good ranges (VPN, office egress, etc.) is a standard IR step, and it's just as relevant in cloud investigations as it is in traditional network forensics.
+1. **`SetDefaultPolicyVersion` as the event name.** This API call is rare in legitimate workflows. Seeing it at all is worth investigating.
+2. **`versionId: v3`.If you've already reviewed the policy's version history, you immediately recognize v3 as the full-admin version. This single field tells you the outcome of the action without needing to check anything else.
+3. **The user agent literally contains `kali-amd64`.** In a real environment, this is about as loud a signal as it gets. Kali Linux is a giveaway. This is easy to miss if you're only skimming event names.
+4. **Source IP correlation.** Matching the source IP against known-good ranges is a standard IR thing, and it's just as relevant in cloud investigations as it is in traditional network forensics.
 
 ## Takeaways
 
