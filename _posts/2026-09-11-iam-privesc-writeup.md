@@ -21,7 +21,7 @@ The goal was to close the loop an IR analyst actually cares about: what happened
   - GuardDuty (pending account activation)
 - CloudGoat 2.5.0 deployed via Poetry, targeting the `iam_privesc_by_rollback` scenario
 
-Standing up detection first, then attacking,  you can't investigate what you never logged.
+Standing up detection first, then attacking.
 
 ## The Vulnerability: Policy Version Rollback
 
