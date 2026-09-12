@@ -1,0 +1,56 @@
+---
+---
+@import "{{ site.theme }}";
+
+body {
+  background-color: #0d1117;
+  color: #c9d1d9;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.page-header {
+  background: linear-gradient(120deg, #0d1117 0%, #001a0d 100%);
+  border-bottom: 2px solid #39ff14;
+}
+
+.project-name {
+  color: #39ff14;
+  text-shadow: 0 0 8px rgba(57,255,20,0.5);
+}
+
+.project-tagline {
+  color: #58a6ff;
+}
+
+.main-content {
+  background-color: #0d1117;
+}
+
+a { color: #58a6ff; }
+a:hover { color: #39ff14; }
+
+code, pre {
+  background-color: #161b22;
+  color: #39ff14;
+  border: 1px solid #30363d;
+}
+
+h1, h2, h3 {
+  color: #39ff14;
+}
+
+table th {
+  background-color: #161b22;
+  color: #39ff14;
+}
+table td, table th {
+  border-color: #30363d;
+}
+table tr:nth-child(2n) {
+  background-color: #0d1117;
+}
+
+blockquote {
+  color: #8b949e;
+  border-left-color: #39ff14;
+}
