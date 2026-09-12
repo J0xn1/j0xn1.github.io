@@ -60,7 +60,7 @@ aws s3 ls --profile raynor
 
 ## Reading the Evidence
 
-This is the part I actually care most about. Pulling the corresponding CloudTrail event afterward showed exactly what a real investigation would show:
+This is the part I actually care most about. Pulling the CloudTrail event afterward showed exactly what a real investigation would show:
 
 ```json
 {
