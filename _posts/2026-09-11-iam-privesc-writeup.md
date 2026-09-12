@@ -27,7 +27,7 @@ Standing up detection first, then attacking.
 
 CloudGoat deployed a low-privilege IAM user (`raynor`) with what looked like a minimal, read-only policy. But AWS IAM policies keep version history up to five versions per managed policy and old versions don't disappear when a policy is updated unless someone explicitly deletes them.
 
-Inspecting the policy's version history revealed the problem immediately:
+Analyzing the policy's version history revealed the problem immediately:
 
 | Version | Permissions |
 |---|---|
@@ -60,7 +60,7 @@ aws s3 ls --profile raynor
 
 ## Reading the Evidence
 
-This is the part I actually care most about. Pulling the CloudTrail event afterward showed exactly what a real investigation would show:
+ Pulling the CloudTrail event afterward showed exactly what a real investigation would show:
 
 ```json
 {
@@ -80,15 +80,15 @@ This is the part I actually care most about. Pulling the CloudTrail event afterw
 This is the order I'd flag them in a real investigation:
 
 1. **`SetDefaultPolicyVersion` as the event name.** This API call is rare in legitimate workflows. Seeing it at all is worth investigating.
-2. **`versionId: v3`.If you've already reviewed the policy's version history, you immediately recognize v3 as the full-admin version. This single field tells you the outcome of the action without needing to check anything else.
-3. **The user agent literally contains `kali-amd64`.** In a real environment, this is about as loud a signal as it gets. Kali Linux is a giveaway. This is easy to miss if you're only skimming event names.
+2. **`versionId: v3` If you've already reviewed the policy's version history, you immediately recognize v3 as the full admin version. This field tells you the outcome of the action without needing to check anything else.
+3. **The user agent contains `kali-amd64`.** In a real environment, this is about as loud a signal as it gets. Kali Linux is a giveaway. This is easy to miss if you're only skimming event names.
 4. **Source IP correlation.** Matching the source IP against known-good ranges is a standard IR thing, and it's just as relevant in cloud investigations as it is in traditional network forensics.
 
 ## Takeaways
 
-- **Old policy versions are a real, underrated attack surface.** IAM policies default to keeping up to five versions, and cleanup isn't automatic. A single overlooked permission (`iam:SetDefaultPolicyVersion`) turned a "read-only" identity into a full admin.
-- **Logging before attacking matters.** Because CloudTrail was already running, this entire chain was fully reconstructable after the fact — exactly the workflow a real detection engineer or IR analyst would rely on.
-- **Small details carry a lot of signal.** The user-agent string alone would be enough to open an investigation in a real SOC. Cloud security work has different artifacts than traditional IR, but the instinct and what to look for transfer directly.
+- **Old policy versions are a real, underrated attack surface.** IAM policies default to keeping up to five versions, and cleanup isn't automatic. An overlooked permission (`iam:SetDefaultPolicyVersion`) turned a read-only identity into a full admin.
+- **Logging before attacking matters.** Because CloudTrail was already running, this entire chain was fully reconstructable after the fact.
+- **Small details carry a lot of signal.** The user-agent string alone would be enough to open an investigation in a real environment. Cloud security work has different artifacts than traditional IR, but the instinct and what to look for transfers directly.
 
 ## Next Up
 
