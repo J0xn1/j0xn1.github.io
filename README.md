@@ -3,4 +3,4 @@ Hands-on cloud security lab write-ups (AWS/Azure) — IR background, Cloud Incid
 
 ## Posts
 
-- [From Incident Response to Cloud Security: Exploiting an IAM Privilege Escalation in AWS](/2026/09/11/iam-privesc-writeup.html)
+- [Cloud Incident Response: IAM Privilege Escalation](/2026/09/11/iam-privesc-writeup.html)
